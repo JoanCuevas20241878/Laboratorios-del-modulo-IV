@@ -1,0 +1,104 @@
+PRACTICA 1
+
+sudo yum install httpd
+sudo yum systemctl start httpd
+sudo yum systemctl enable httpd
+sudo yum systemctl status httpd
+firewall-cmd --zone=public --add-port8080/tcp
+sudo nano /etc/httpd/conf/httpd.conf
+"Listen 8080"
+
+sudo mkdir /var/www/html/HolaMundo/
+cd /var/www/html/HolaMundo/
+sudo nano index.html
+"<h1>HolaMundo</h1>"
+sudo chown -R apache:apache /var/www/html/HolaMundo
+sudo chmod -R 755 /var/www/html/HolaMundo
+
+sudo nano /etc/httpd/conf.d/holamundo.conf
+
+<VirtualHost *:80>
+    ServerName holamundo.local
+    DocumentRoot "/var/www/html/HolaMundo"
+
+    <Directory "/var/www/html/HolaMundo">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+sudo systemctl restart httpd
+
+sudo mkdir /var/www/html/JoanCuevas/
+cd /var/www/html/JoanCuevas/
+sudo nano index.html
+"<h1>Soy Joan Cuevas 20241878</h1>"
+"<h2>Sistemas Operativos III</h2>
+sudo chown -R apache:apache /var/www/html/JoanCuevas
+sudo chmod -R 755 /var/www/html/JoanCuevas
+
+sudo nano /etc/httpd/conf.d/JoanCuevas.conf
+
+<VirtualHost *:8080>
+    ServerName joancuevas.local
+    DocumentRoot "/var/www/html/JoanCuevas"
+
+    <Directory "/var/www/html/JoanCuevas">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+sudo systemctl restart httpd
+
+--------------------------------------------------------------------------------
+
+PRACTICA 2
+
+sudo yum install postfix
+sudo yum install s-nail
+
+sudo nano /etc/postfix/main.cf
+myhostname = prueba.local
+mydomain = prueba.local
+myorigin = $mydomain
+
+inet_interfaces = all
+inet_protocols = all
+
+
+mydestination = $myhostname
+localhost= $mydomain
+localhost= $mydomain
+
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_mechanism_filter = plain
+
+sudo nano /etc/postfix/sasl_passwd
+[smtp.gmail.com]:587 tuemail@gmail.com:tucontraseña
+
+sudo chmod 600 /etc/postfix/sasl_passwd
+sudo postmap /etc/postfix/sasl_passwd
+
+sudo systemctl restart postfix
+
+echo "Joan Cuevas - Matrícula XXXXXXXX" | s-nail -s "MambruSeFueALaGuerra" os3conadrian@gmail.com
+
+---------------------------------------------------------------------------------------------------
+
+PRACTICA 3
+
+yum install cups
+cupsctl -remote-admin --remote-any --share-printers
+yum install epel-release
+yum install cups-pdf
+firewall-cmd --list-all
+firewall-cmd --get-active-zones
+firewall-cmd --zone=public --add-port=631/tcp
+
+
+
