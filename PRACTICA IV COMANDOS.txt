@@ -58,6 +58,8 @@ PRACTICA 2
 sudo yum install postfix
 sudo yum install s-nail
 
+Ponemos esto al final:
+
 sudo nano /etc/postfix/main.cf
 myhostname = prueba.local
 mydomain = prueba.local
@@ -79,7 +81,7 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_mechanism_filter = plain
 
 sudo nano /etc/postfix/sasl_passwd
-[smtp.gmail.com]:587 tuemail@gmail.com:tucontraseña
+[smtp.gmail.com]:587 tuemail@gmail.com:tucontraseña (en google cuentas, buscas contraseñas de aplicaciones)
 
 sudo chmod 600 /etc/postfix/sasl_passwd
 sudo postmap /etc/postfix/sasl_passwd
