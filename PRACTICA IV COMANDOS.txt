@@ -104,3 +104,16 @@ firewall-cmd --zone=public --add-port=631/tcp
 
 
 
+sudo nano enviar_correo.sh
+
+!/bin/bash
+
+# Pedir información al usuario
+read -p "¿A quién va dirigido el correo? (email): " destinatario
+read -p "Asunto del correo: " asunto
+read -p "Cuerpo del correo: " cuerpo
+
+# Enviar correo
+echo "$cuerpo" | mail -s "$asunto" "$destinatario"
+
+
